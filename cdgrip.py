@@ -303,7 +303,7 @@ def main():
 		opts, args = getopt.getopt(sys.argv[1:], "hv", ["delete-bin-toc", "help", "with-cddb"])
 	except getopt.GetoptError:
 		usage()
- 		sys.exit(2)
+		sys.exit(2)
 
 	# Check the user passed in the tocfile
 	if len(args) != 1:
@@ -319,7 +319,7 @@ def main():
 
 	# Parse the command-line options   
 	for opt, arg in opts:
- 		if opt in ("-h", "--help"):
+		if opt in ("-h", "--help"):
 			usage()
 			sys.exit()
 		if opt == "-v":
