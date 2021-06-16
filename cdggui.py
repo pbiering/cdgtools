@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 # cdggui - cdgtools: CD+G Ripper GUI
 #

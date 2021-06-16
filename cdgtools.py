@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 # cdgtools - cdgtools: Common library module and GUI starter
 #

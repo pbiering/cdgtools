@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python2
 
 # cdg2text - cdgtools: CDG to textual representation
 
