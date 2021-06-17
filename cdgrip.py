@@ -165,7 +165,7 @@ DELIMITER = ("-----------------------------------------------------------")
 
 
 
-def cdgrip(tocfilename, delete_bin_toc=False, with_cddb=False, verbose=False):
+def cdgrip(tocfilename, delete_bin_toc=False, with_cddb=False, verbose=False, track_prefix=""):
 
 	# Parse the TOC file to get the bin file and track details
 	binfilename, interleaved, startBytes, trackSizeBytes = cdgdao.ParseToc (tocfilename)
@@ -190,10 +190,10 @@ def cdgrip(tocfilename, delete_bin_toc=False, with_cddb=False, verbose=False):
 	leadoutStartByte = startBytes[numTracks - 1] + trackSizeBytes[numTracks - 1]
 	leadoutMins, leadoutSecs, leadoutFrames = cdgtools.ComputeMSF (leadoutStartByte)
 
-	# Create generic track names in case no match found, or CDDB is disabled			
+	# Create generic track names in case no match found, or CDDB is disabled
 	trackNames = []
 	for track in range(numTracks):
-		trackNames.append ("track%.02d" % (track + 1))
+		trackNames.append ("%strack%.02d" % (track_prefix, (track + 1)))
 
 	# Do the CDDB query if requested
 	if (with_cddb == True):
@@ -288,6 +288,8 @@ def usage():
 	print ("")
 	print ("  --with-cddb               :    Attempt to get track names from CDDB")
 	print ("")
+	print ("  --track-prefix <prefix>   :    Optional track name prefix")
+	print ("")
 	print ("  --help                    :    Display this message")
 	print ("")
 
@@ -300,7 +302,7 @@ def main():
 	
 	# Get the options out
 	try:
-		opts, args = getopt.getopt(sys.argv[1:], "hv", ["delete-bin-toc", "help", "with-cddb"])
+		opts, args = getopt.getopt(sys.argv[1:], "hv", ["delete-bin-toc", "help", "with-cddb", "track-prefix=" ])
 	except getopt.GetoptError:
 		usage()
 		sys.exit(2)
@@ -315,6 +317,7 @@ def main():
 	# Default settings
 	with_cddb = False
 	delete_bin_toc = False
+	track_prefix = ""
 	verbose = False
 
 	# Parse the command-line options   
@@ -328,11 +331,15 @@ def main():
 			with_cddb = True
 		if opt in ("--delete-bin-toc"):
 			delete_bin_toc = True
+		if opt in ("--track-prefix"):
+			track_prefix = arg
 
 	# Do the rip
-	cdgrip(tocfile, delete_bin_toc, with_cddb, verbose)
+	cdgrip(tocfile, delete_bin_toc, with_cddb, verbose, track_prefix)
 
 	return
 
 if __name__ == "__main__":
     sys.exit(main())
+
+# vim: tabstop=4 smartindent shiftwidth=4 expandtab!
